@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Education is Opportunity | Yucatán Research</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Characteristic Palette: Henequén Green & Earthy Sisal */
+            --bg-color: #fcfaf2;
+            --text-color: #1a1c1a;
+            --accent-color: #2d5a27; 
+            --secondary-accent: #a67c52;
+            --light-gray: #e0ddd3;
+            --interactive-bg: #f4f1e6;
+            --card-bg: #ffffff;
+            --soft-border: 1px solid #d4d1c5;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #0f120f;
+            --text-color: #e8e8e2;
+            --accent-color: #4ea644;
+            --secondary-accent: #c9a67a;
+            --light-gray: #252825;
+            --interactive-bg: #1a1d1a;
+            --card-bg: #161a16;
+            --soft-border: 1px solid #333b33;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.8;
+            transition: all 0.5s ease;
+        }
+
+        h1, h2, h3 { font-family: 'Playfair Display', serif; font-weight: 700; color: var(--accent-color); }
+
+        nav {
+            padding: 1.2rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: var(--soft-border);
+            position: sticky;
+            top: 0;
+            background: var(--bg-color);
+            z-index: 1000;
+        }
+
+        .theme-toggle {
+            cursor: pointer;
+            padding: 8px 18px;
+            border: 2px solid var(--accent-color);
+            background: none;
+            color: var(--accent-color);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .theme-toggle:hover { background: var(--accent-color); color: white; }
+
+        header {
+            padding: 140px 10% 80px;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header h1 { font-size: 3.8rem; line-height: 1.1; color: var(--text-color); margin-bottom: 20px; }
+        .tagline { font-size: 0.9rem; letter-spacing: 4px; text-transform: uppercase; color: var(--secondary-accent); font-weight: 600; }
+
+        section { padding: 80px 10%; max-width: 1100px; margin: 0 auto; }
+
+        /* Quiz Styling */
+        .quiz-container {
+            background-color: var(--interactive-bg);
+            padding: 50px;
+            border-radius: 4px;
+            border: var(--soft-border);
+        }
+
+        .quiz-option {
+            display: block;
+            width: 100%;
+            padding: 18px;
+            margin: 12px 0;
+            background: var(--card-bg);
+            border: var(--soft-border);
+            cursor: pointer;
+            text-align: left;
+            font-size: 1rem;
+            color: var(--text-color);
+            transition: 0.3s;
+        }
+
+        .quiz-option:hover { border-color: var(--accent-color); transform: translateX(5px); }
+
+        .feedback {
+            margin-top: 25px;
+            padding: 20px;
+            display: none;
+            border-left: 4px solid var(--secondary-accent);
+            background: rgba(0,0,0,0.03);
+        }
+
+        /* Results & Process (Bento Box Layout) */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .bento-item {
+            background: var(--card-bg);
+            padding: 40px;
+            border: var(--soft-border);
+            border-radius: 4px;
+        }
+
+        .full-width { grid-column: 1 / -1; }
+
+        /* Card Hover Reveal */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 40px;
+            border: var(--soft-border);
+            position: relative;
+            overflow: hidden;
+            transition: 0.4s;
+            min-height: 250px;
+        }
+
+        .card-reveal {
+            position: absolute;
+            top: 100%; left: 0; width: 100%; height: 100%;
+            background: var(--accent-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            padding: 30px;
+            box-sizing: border-box;
+            transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card:hover .card-reveal { top: 0; }
+
+        /* References */
+        .refs {
+            background-color: var(--interactive-bg);
+            padding: 60px 10%;
+            font-size: 0.8rem;
+            border-top: var(--soft-border);
+        }
+
+        .refs h3 { color: var(--text-color); border-bottom: 1px solid var(--accent-color); display: inline-block; margin-bottom: 20px; }
+
+        footer {
+            padding: 80px 20px;
+            text-align: center;
+            border-top: var(--soft-border);
+        }
+
+        .team-list {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            header h1 { font-size: 2.5rem; }
+            .bento-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <span style="font-weight: 600; letter-spacing: 1.5px; color: var(--accent-color);">GLOBAL PERSPECTIVES // YUCATÁN</span>
+        <button class="theme-toggle" onclick="toggleTheme()">Atmosphere</button>
+    </nav>
+
+    <header>
+        <span class="tagline">Research & Advocacy</span>
+        <h1>The Reality Behind the Statistics</h1>
+        <p>An interactive inquiry into educational inequality and systemic barriers in the Yucatán Peninsula.</p>
+    </header>
+
+    <section>
+        <h2>01. Test Your Perspective</h2>
+        <p>Before diving into our findings, how aware are you of the current situation in rural Yucatán?</p>
+        
+        <div class="quiz-container">
+            <h3>Which factor impacts school dropout rates most in rural Mayan communities?</h3>
+            <button class="quiz-option" onclick="showFeedback('correct')">A) Economic necessity and early entry into the workforce</button>
+            <button class="quiz-option" onclick="showFeedback('partial')">B) General lack of interest from students</button>
+            <button class="quiz-option" onclick="showFeedback('tech')">C) Purely a lack of technological infrastructure</button>
+            
+            <div id="quiz-feedback" class="feedback">
+                <strong id="feedback-title" style="color: var(--accent-color);"></strong>
+                <p id="feedback-text"></p>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>02. Impact Pillars</h2>
+        <p>Hover over the cards to explore how educational lag restricts regional development.</p>
+        
+        <div class="grid">
+            <div class="card">
+                <h3>Regional Economy</h3>
+                <p>How does education affect local GDP and labor?</p>
+                <div class="card-reveal">
+                    <p>The lack of learning in villages limits innovation and job opportunities, causing forced migration and long-term economic stagnation.</p>
+                </div>
+            </div>
+            <div class="card">
+                <h3>Governance</h3>
+                <p>Can a democracy function without education?</p>
+                <div class="card-reveal">
+                    <p>A lack of "voting education" leads to unbalanced national decisions, as citizens may lack the tools to evaluate political choices effectively.</p>
+                </div>
+            </div>
+            <div class="card">
+                <h3>Mayan Identity</h3>
+                <p>The risk of linguistic erosion.</p>
+                <div class="card-reveal">
+                    <p>Without formal bilingual education, youth prioritize Spanish for survival, causing ancestral languages to disappear within generations.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="background-color: rgba(45, 90, 39, 0.03);">
+        <h2>03. Project Process & Results</h2>
+        <div class="bento-grid">
+            <div class="bento-item full-width">
+                <h3>The Final Objective</h3>
+                <p>The result of this project is to create awareness about the economic disadvantage. Through the help of an informative video, the audience will be more informed about how it impacts communities and curtails development opportunities. Our aim is to invite viewers to ponder realistic solutions that lead to a more informed and responsible audience.</p>
+            </div>
+            <div class="bento-item">
+                <h3>The Methodology</h3>
+                <p>The process started with identifying a relevant topic. We went through a brainstorming process to discuss affected groups and specific causes. This allowed us to contemplate which root issues are most important to address so the problem can be reduced effectively.</p>
+            </div>
+            <div class="bento-item">
+                <h3>Technical Execution</h3>
+                <p>To record our informative video, we utilized effective materials: a tripod for stability and a high-quality microphone for audio clarity. The project was edited using specialized software like Filmora, Canva, and CapCut, ensuring credible data was presented through valid research sources.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="refs">
+        <h3>Scholarly References</h3>
+        <ul style="list-style: none; padding: 0;">
+            <li>García, E., & Weiss, E. (2017). <em>Factors affecting educational equity in rural schools in Mexico.</em></li>
+            <li>Autonomous University of Quintana Roo. (2019). <em>Educational lag and inequality in the Yucatán Peninsula.</em></li>
+            <li>Yucatán Magazine. (2022). <em>Mayan language could disappear in 30 years, researcher warns.</em></li>
+            <li>UNESCO. (2023). <em>World poverty and secondary education reports.</em></li>
+            <li>Acevedo Vales, A. (2025). <em>Pobreza con muchas caras: Diario de Yucatán.</em></li>
+        </ul>
+    </section>
+
+    <footer>
+        <p style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.7rem; margin-bottom: 20px; color: var(--secondary-accent);">Research Team</p>
+        <ul class="team-list">
+            <li>Alejandro Irigoyen</li>
+            <li>Mateo Solorzano</li>
+            <li>Lorenzo Togno</li>
+            <li>Irene Villalobos</li>
+            <li>Ana Luisa Franco</li>
+            <li>Emily Pat</li>
+        </ul>
+        <p style="margin-top: 40px; font-size: 0.7rem; opacity: 0.5;">© 2026 IGCSE Global Perspectives Campaign</p>
+    </footer>
+
+    <script>
+        function toggleTheme() {
+            const body = document.body;
+            const currentTheme = body.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                body.removeAttribute('data-theme');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+            }
+        }
+
+        function showFeedback(type) {
+            const feedbackDiv = document.getElementById('quiz-feedback');
+            const title = document.getElementById('feedback-title');
+            const text = document.getElementById('feedback-text');
+            feedbackDiv.style.display = 'block';
+
+            if (type === 'correct') {
+                title.innerText = "Accurate Analysis.";
+                text.innerText = "Our research shows that economic survival is the #1 priority, forcing youth to leave classrooms for field work or informal tourism.";
+            } else if (type === 'partial') {
+                title.innerText = "Not quite.";
+                text.innerText = "Lack of interest is often a consequence, not a cause. When education doesn't guarantee a better income, the incentive is lost.";
+            } else {
+                title.innerText = "Critical Factor.";
+                text.innerText = "While technology is vital, without covering basic needs like food and transport, internet access alone does not solve dropout rates.";
+            }
+        }
+    </script>
+</body>
+</html>
